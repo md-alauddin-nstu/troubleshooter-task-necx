@@ -1,3 +1,15 @@
+:root {
+  --color-bg: #1a1f2e;
+  --color-bg-alt: #242b3d;
+  --color-bg-btn: #63cb6f;
+  --color-bg-bubble-right: #4ca054;
+  --color-text: #ffffff;
+  --color-text-alt: #9ca3af;
+  --color-sucess: #54b685;
+  --color-error: #de524c;
+  --color-border: #3a4759;
+}
+
 .app {
   min-height: 100vh;
   background-color: #1a1f2e;
@@ -128,4 +140,81 @@
 .getting-started li {
   padding: 0.5rem 0;
   font-size: 1.1rem;
+}
+
+/* Home Page */
+.app-home {
+  width: 100%;
+  height: 100%;
+}
+
+/* Chat Page */
+.page-chat {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #3a4759;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #242b3d;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-chat .chat-header,
+.page-chat .chat-body,
+.page-chat .chat-footer {
+  padding: 1rem;
+  border-bottom: 1px solid #3a4759;
+}
+
+.page-chat .chat-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #4ade80;
+}
+
+.page-chat .chat-footer {
+  border-bottom: none;
+}
+
+.page-chat .chat-body {
+  flex: 1;
+  overflow-y: auto;
+  border-bottom: none;
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+  flex-direction: column;
+}
+.page-chat .chat-row {
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+.page-chat .chat-row.left {
+  justify-content: flex-start;
+}
+.page-chat .chat-row.right {
+  justify-content: flex-end;
+}
+
+.toast {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.toast-success {
+  background-color: var(--color-sucess);
+}
+
+.toast-error {
+  background-color: var(--color-error);
 }
