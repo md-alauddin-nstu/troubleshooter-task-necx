@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { createMessage, createUser, getMessages, getUsers } from "./store.js";
+import userRoutes from "./user/user.route.js";
+import messageRoutes from "./message/message.route.js";
 
 const app = express();
 const PORT = 3001;
@@ -9,73 +10,8 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
-// User routes
-app.post("/api/user", async (req, res, next) => {
-  console.log(`✔ Request received at ${req.path}`);
-  try {
-    const { name } = req.body;
-    if (!(typeof name === "string" && name.trim() !== "")) {
-      console.error("Invalid Data", name);
-      throw new Error("Invalid data");
-    }
-
-    const newUser = await createUser({ name });
-    res
-      .status(201)
-      .json({ message: "User created successfully", data: newUser });
-  } catch (e) {
-    next(e);
-  }
-});
-
-app.get("/api/user", async (req, res, next) => {
-  console.log(`✔ Request received at ${req.path}`);
-  try {
-    const users = await getUsers();
-    res.status(200).json({ message: "success", data: users });
-  } catch (e) {
-    next(e);
-  }
-});
-
-// Message routes
-app.post("/api/message", async (req, res, next) => {
-  console.log(`✔ Request received at ${req.path}`);
-  try {
-    const { content, senderId } = req.body;
-    if (
-      !(
-        typeof content === "string" &&
-        content.trim() !== "" &&
-        typeof senderId === "number" &&
-        senderId > 0
-      )
-    ) {
-      throw new Error("Invalid data");
-    }
-
-    const newMessage = await createMessage({
-      content: content.trim(),
-      senderId,
-    });
-
-    res
-      .status(201)
-      .json({ message: "Message created successfully", data: newMessage });
-  } catch (e) {
-    next(e);
-  }
-});
-
-app.get("/api/message", async (req, res, next) => {
-  console.log(`✔ Request received at ${req.path}`);
-  try {
-    const messages = await getMessages();
-    res.status(200).json({ message: "success", data: messages });
-  } catch (e) {
-    next(e);
-  }
-});
+app.use("/api/user", userRoutes);
+app.use("/api/message", messageRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

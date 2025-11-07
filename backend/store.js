@@ -75,3 +75,14 @@ export async function getMessages() {
     return { ...message, sender };
   });
 }
+
+export default {
+  user: {
+    getUsers,
+    createUser,
+  },
+  message: {
+    getMessages,
+    createMessage,
+  },
+};
