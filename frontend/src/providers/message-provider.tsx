@@ -1,20 +1,32 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 import { useUser } from "../hooks/user-hook";
+import { Message, MessageContextType } from "../types";
 
-export const MessageContext = createContext({
+export const MessageContext = createContext<MessageContextType>({
   messages: [],
   setMessages: () => {},
   addMessage: () => {},
 });
 
-export const MessageProvider = ({ children }) => {
-  const [messages, setMessages] = useState([]);
+interface MessageProviderProps {
+  children: ReactNode;
+}
+
+export const MessageProvider = ({ children }: MessageProviderProps) => {
+  const [messages, setMessages] = useState<Message[]>([]);
   const { selectedUser } = useUser();
 
-  const addMessage = (message) => {
-    console.log("selectedUser in addMessage:", selectedUser);
-    message = { ...message, sender: selectedUser };
-    setMessages((prevMessages) => [...prevMessages, message]);
+  const addMessage = (message: Message) => {
+    if (!selectedUser) return; // no selected sender — ignore or handle upstream
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        ...message,
+        sender: selectedUser,
+      },
+    ]);
+
   };
 
   return (

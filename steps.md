@@ -21,3 +21,34 @@
 **Next Steps:**
 - Verify TypeScript configuration by running the TypeScript compiler in both frontend and backend.
 - If successful, proceed to rename source files for TypeScript compatibility.
+
+## Dev & Run notes (updated)
+
+- The project now runs the backend TypeScript server directly in development using `ts-node/esm`.
+- Node ESM requires explicit file extensions for local imports. In TypeScript source we use `.js` extensions for local imports (e.g. `import x from './module.js'`) so the ESM loader can resolve them; `ts-node/esm` maps those to `.ts` at runtime.
+
+Recommended dev workflow:
+
+1. Install dependencies in frontend and backend:
+
+```bash
+cd backend && npm install
+cd ../frontend && npm install
+```
+
+2. Start both dev servers from repo root:
+
+```bash
+npm run dev
+```
+
+3. Open the frontend at http://localhost:5173 and the backend health check at http://localhost:3001/api/health
+
+If you see Vite errors about `main.jsx` missing, verify `frontend/index.html` points to `/src/main.tsx` (this was updated during the TypeScript migration).
+
+Production recommendation:
+
+- Build the frontend with `cd frontend && npm run build`.
+- For the backend, produce a JS build via `tsc -p backend/tsconfig.json` and run the compiled files from the `dist/` folder for best performance.
+
+If you'd like, I can add npm scripts to build the backend into `dist/` and run it with `node` for production.

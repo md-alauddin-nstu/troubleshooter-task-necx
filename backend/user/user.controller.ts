@@ -1,7 +1,8 @@
 import * as userService from "./user.service.js";
+import { Request, Response, NextFunction } from "express";
 
 // User routes
-export const createUser = async (req, res, next) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   console.log(`✔ Request received at ${req.path}`);
   try {
     const { name } = req.body;
@@ -19,7 +20,7 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-export const getUser = async (req, res, next) => {
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   console.log(`✔ Request received at ${req.path}`);
   try {
     const users = await userService.getUsers();

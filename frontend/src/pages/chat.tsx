@@ -7,38 +7,42 @@ import { useEffect } from "react";
 import { useUser } from "../hooks/user-hook";
 import { useToast } from "../hooks/toast-hook";
 import { useMessage } from "../hooks/message-hook";
+import { MessageContextType, UserContextType, ToastContextType } from "../types";
 
 export default function Chat() {
-  const { setUsers, setSelectedUserId } = useUser();
-  const { setMessages } = useMessage();
-  const { setToast } = useToast();
+  const { setUsers, setSelectedUserId } = useUser() as UserContextType;
+  const { setMessages } = useMessage() as MessageContextType;
+  const { setToast } = useToast() as ToastContextType;
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       try {
         const [userRes, messageRes] = await Promise.all([
           getUsers(),
           getMessages(),
         ]);
 
-        console.log("userRes", userRes);
-        console.log("messageRes", messageRes);
-
         setUsers(userRes.data);
         setSelectedUserId(userRes.data[0]?.id || null);
         setMessages(messageRes.data);
-      } catch (e) {
-        console.error("Failed to fetch initial data:", e);
-        setToast({ message: "Failed to load chat data.", type: "error" });
+      } catch (error) {
+        console.error("Failed to fetch initial data:", error);
+        setToast({
+          type: "error",
+          message: error instanceof Error ? error.message : "Failed to load data"
+        });
       }
-    })();
-  }, []);
+    };
+
+    fetchData();
+  }, [setUsers, setSelectedUserId, setMessages, setToast]);
 
   return (
-    <div className="page-chat">
-      <ChatHeader className="chat-header" />
+    <div className="chat-container">
+      <ChatHeader />
       <ChatBody />
-      <ChatFooter className="chat-footer" />
+      <ChatFooter />
     </div>
   );
 }
+

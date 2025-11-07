@@ -1,5 +1,6 @@
 import { access, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import { User, Message, CreateUserInput, CreateMessageInput, StorageService, MessageWithSender } from "./types.js";
 
 const dataDir = path.join(process.cwd(), "data");
 const usersFile = path.join(dataDir, "users.json");
@@ -20,41 +21,40 @@ async function ensureDataFilesExist() {
   }
 }
 
-const readJson = async (filePath) => {
-  await ensureDataFilesExist();
-  const raw = await readFile(filePath, "utf-8");
-  if (!raw) {
-    return [];
-  }
-  return JSON.parse(raw);
+const readJson = async (filePath: string): Promise<any> => {
+  const content = await readFile(filePath, "utf-8");
+  return JSON.parse(content);
 };
 
-const writeJson = async (filePath, data) => {
-  await ensureDataFilesExist();
+const writeJson = async (filePath: string, data: any): Promise<void> => {
   await writeFile(filePath, JSON.stringify(data, null, 2));
 };
 
-export async function createUser({ name }) {
-  const users = await readJson(usersFile);
-  console.log("users");
-  if (users.some((user) => user.name.toLowerCase() === name.toLowerCase())) {
-    throw new Error("User already exist!");
+export async function createUser({ name }: CreateUserInput): Promise<User> {
+  const users = await readJson(usersFile) as User[];
+
+  if (users.some((user: User) => user.name.toLowerCase() === name.toLowerCase())) {
+    throw new Error("User already exists");
   }
-  const newUser = { id: users.length + 1, name };
+
+  const newUser: User = {
+    id: users.length + 1,
+    name,
+  };
   users.push(newUser);
   await writeJson(usersFile, users);
 
   return newUser;
 }
 
-export async function getUsers() {
-  return await readJson(usersFile);
+export async function getUsers(): Promise<User[]> {
+  return await readJson(usersFile) as User[];
 }
 
-export async function createMessage({ content, senderId }) {
-  const messages = await readJson(messagesFile);
+export async function createMessage({ content, senderId }: CreateMessageInput): Promise<Message> {
+  const messages = await readJson(messagesFile) as Message[];
 
-  const newMessage = {
+  const newMessage: Message = {
     id: messages.length + 1,
     content,
     senderId,
@@ -66,13 +66,13 @@ export async function createMessage({ content, senderId }) {
   return newMessage;
 }
 
-export async function getMessages() {
-  const messages = await readJson(messagesFile);
-  const users = await readJson(usersFile);
+export async function getMessages(): Promise<MessageWithSender[]> {
+  const messages = await readJson(messagesFile) as Message[];
+  const users = await readJson(usersFile) as User[];
 
-  return messages.map((message) => {
-    const sender = users.find((user) => user.id === message.senderId);
-    return { ...message, sender };
+  return messages.map((message: Message) => {
+    const sender = users.find((user: User) => user.id === message.senderId);
+    return { ...message, sender } as MessageWithSender;
   });
 }
 

@@ -1,25 +1,27 @@
+import { ApiResponse, CreateMessageInput, Message } from '../types';
+
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-export async function createMessage(message) {
-  const res = await fetch(`${API_BASE_URL}/message`, {
+export async function createMessage(message: CreateMessageInput): Promise<ApiResponse<Message>> {
+  const response = await fetch(`${API_BASE_URL}/api/messages`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(message),
   });
-  if (res.status >= 400) {
-    const errorData = await res.json();
+  if (!response.ok) {
+    const errorData = await response.json();
     throw new Error(errorData.message || "Failed to create message");
   }
-  return await res.json();
+  return response.json();
 }
 
-export async function getMessages() {
-  const res = await fetch(`${API_BASE_URL}/message`);
-  if (res.status >= 400) {
-    const errorData = await res.json();
-    throw new Error(errorData.message || "Failed to fetch messages");
+export async function getMessages(): Promise<ApiResponse<Message[]>> {
+  const response = await fetch(`${API_BASE_URL}/api/messages`);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to get messages");
   }
-  return await res.json();
+  return response.json();
 }

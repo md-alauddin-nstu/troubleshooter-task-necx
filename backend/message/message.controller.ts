@@ -1,6 +1,7 @@
 import * as messageService from "./message.service.js";
-// Message routes
-export const createMessage = async (req, res, next) => {
+import { RequestHandler, CreateMessageInput } from "../types.js";
+
+export const createMessage: RequestHandler = async (req, res, next) => {
   console.log(`✔ Request received at ${req.path}`);
   try {
     const { content, senderId } = req.body;
@@ -8,17 +9,18 @@ export const createMessage = async (req, res, next) => {
       !(
         typeof content === "string" &&
         content.trim() !== "" &&
-        typeof senderId === "number" &&
-        senderId > 0
+        typeof senderId === "string" &&
+        /^\d+$/.test(senderId)
       )
     ) {
       throw new Error("Invalid data");
     }
 
-    const newMessage = await messageService.createMessage({
+    const messageInput: CreateMessageInput = {
       content: content.trim(),
-      senderId,
-    });
+      senderId: parseInt(senderId, 10),
+    };
+    const newMessage = await messageService.createMessage(messageInput);
 
     res
       .status(201)
@@ -28,7 +30,7 @@ export const createMessage = async (req, res, next) => {
   }
 };
 
-export const getMessages = async (req, res, next) => {
+export const getMessages: RequestHandler = async (req, res, next) => {
   console.log(`✔ Request received at ${req.path}`);
   try {
     const messages = await messageService.getMessages();

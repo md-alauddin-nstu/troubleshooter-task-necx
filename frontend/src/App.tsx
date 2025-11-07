@@ -1,10 +1,9 @@
 import "./App.css";
-import Toast from "./components/toast.jsx";
+import Toast from "./components/toast";
 import Chat from "./pages/chat";
-import Home from "./pages/home";
-import { MessageProvider } from "./providers/message-provider.jsx";
-import { ToastProvider } from "./providers/toast-provider.jsx";
-import { UserProvider } from "./providers/user-provider.jsx";
+import { MessageProvider } from "./providers/message-provider";
+import { ToastProvider } from "./providers/toast-provider";
+import { UserProvider } from "./providers/user-provider";
 
 function App() {
   return (
@@ -15,7 +14,7 @@ function App() {
       </header>
 
       <main className="app-main">
-        {/* <Home /> */}
+  {/* <Home /> */}
         <ToastProvider>
           <UserProvider>
             <MessageProvider>

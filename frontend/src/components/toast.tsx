@@ -1,17 +1,25 @@
 import { useToast } from "../hooks/toast-hook";
+import { Toast as ToastType, ToastContextType } from "../types";
 
 export default function Toast() {
-  const { toast, setToast } = useToast();
-  const className =
-    toast?.type === "error" ? "toast toast-error" : "toast toast-success";
+  const { toast, setToast } = useToast() as ToastContextType;
+
+  const className = `toast ${toast.type === "error" ? "toast-error" : "toast-success"}`;
+
+  const handleDismiss = () => {
+    const emptyToast: ToastType = { message: "", type: "" };
+    setToast(emptyToast);
+  };
+
   return (
     <>
-      {toast && toast.message && (
+      {toast.message && (
         <div className={className}>
           {toast.message}
           <button
             className="dismiss"
-            onClick={() => setToast({ message: "", type: "" })}
+            onClick={handleDismiss}
+            type="button"
           >
             X
           </button>

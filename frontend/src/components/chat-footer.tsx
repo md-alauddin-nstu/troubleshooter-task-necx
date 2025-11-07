@@ -1,30 +1,39 @@
-import { useState } from "react";
-import { useToast } from "../hooks/toast-hook.js";
-import { createMessage } from "../apis/message-apis.js";
-import { useUser } from "../hooks/user-hook.js";
-import { useMessage } from "../hooks/message-hook.js";
+import { useState, FormEvent, ChangeEvent } from "react";
+import { useToast } from "../hooks/toast-hook";
+import { createMessage } from "../apis/message-apis";
+import { useUser } from "../hooks/user-hook";
+import { useMessage } from "../hooks/message-hook";
+import { UserContextType, MessageContextType, ToastContextType } from "../types";
 
 export default function ChatFooter() {
-  const [messageText, setMessageText] = useState("");
-  const { addMessage } = useMessage();
-  const { selectedUserId } = useUser();
-  const { setToast } = useToast();
+  const [messageText, setMessageText] = useState<string>("");
+  const { addMessage } = useMessage() as MessageContextType;
+  const { selectedUserId } = useUser() as UserContextType;
+  const { setToast } = useToast() as ToastContextType;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!selectedUserId) {
+      setToast({ type: "error", message: "Please select a user first" });
+      return;
+    }
+
     try {
-      // Assume createMessage is imported from message-apis.js
       const res = await createMessage({
         content: messageText,
-        senderId: selectedUserId,
+        senderId: selectedUserId.toString()
       });
+      
       setMessageText("");
       addMessage(res.data);
       setToast({ type: "success", message: "Message sent!" });
-      console.log("Message sent:", messageText);
     } catch (error) {
       console.error("Failed to send message:", error);
-      setToast({ type: "error", message: error.message });
+      setToast({ 
+        type: "error", 
+        message: error instanceof Error ? error.message : "Failed to send message" 
+      });
     }
   };
 
@@ -35,9 +44,10 @@ export default function ChatFooter() {
           type="text"
           placeholder="Type your message..."
           value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setMessageText(e.target.value)}
+          disabled={!selectedUserId}
         />
-        <button type="submit">Send</button>
+        <button type="submit" disabled={!selectedUserId}>Send</button>
       </form>
     </div>
   );

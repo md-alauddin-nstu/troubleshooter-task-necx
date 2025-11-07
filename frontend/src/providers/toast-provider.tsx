@@ -1,27 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
+import { Toast, ToastContextType } from "../types";
 
-export const ToastContext = createContext({
-  toast: {
-    message: "",
-    type: "", // 'success', 'error'
-  },
+const initialToastState: Toast = { message: "", type: "" };
+
+export const ToastContext = createContext<ToastContextType>({
+  toast: initialToastState,
   setToast: () => {},
-  clearToast: () => {},
+  clearToast: () => {}
 });
 
-export const ToastProvider = ({ children }) => {
-  const initialToastState = { message: "", type: "" };
-  const [toast, setToast] = useState(initialToastState);
+interface ToastProviderProps {
+  children: ReactNode;
+}
 
-  const clearToast = () => {
-    setToast(initialToastState);
-  };
+export const ToastProvider = ({ children }: ToastProviderProps) => {
+  const [toast, setToast] = useState<Toast>(initialToastState);
+
+  const clearToast = () => setToast(initialToastState);
 
   return (
     <ToastContext.Provider
       value={{
         toast,
-        setToast,
+        setToast: (newToast: Toast) => setToast(newToast),
         clearToast,
       }}
     >

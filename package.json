@@ -1,28 +1,22 @@
 {
-  "name": "necx-messaging-take-home",
-  "private": true,
+  "name": "necx_full_stack_take_home_copy",
   "version": "1.0.0",
-  "description": "NECX Full-Stack Take-Home Interview Project",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "postinstall": "npm --prefix backend install && npm --prefix frontend install",
-    "dev:backend": "npm --prefix backend run dev",
-    "dev:frontend": "npm --prefix frontend run dev",
-    "dev": "concurrently -k -n backend,frontend -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
-    "build": "npm --prefix frontend run build",
-    "start": "npm --prefix backend start"
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start:prod": "concurrently \"cd backend && npm run start:prod\" \"cd frontend && npm run preview\"",
+    "typecheck": "npm run typecheck:backend && npm run typecheck:frontend",
+    "typecheck:backend": "cd backend && tsc --noEmit",
+    "typecheck:frontend": "cd frontend && tsc --noEmit"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/node": "^24.10.0",
-    "concurrently": "^9.0.1",
-    "typescript": "^5.9.3"
-  },
-  "keywords": [
-    "interview",
-    "fullstack",
-    "messaging",
-    "react",
-    "express"
-  ],
-  "author": "NECX",
-  "license": "MIT"
+    "concurrently": "^8.2.2"
+  }
 }

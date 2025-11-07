@@ -1,6 +1,11 @@
+
 import storageService from "../store.js";
 
-export async function createUser({ name }) {
+interface CreateUserInput {
+  name: string;
+}
+
+export async function createUser({ name }: CreateUserInput) {
   return await storageService.user.createUser({ name });
 }
 
