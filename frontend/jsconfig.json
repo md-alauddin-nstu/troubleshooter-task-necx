@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      // 1. Alias for components directory (standard Shadcn practice)
+      // Allows importing components as: import { Button } from "@/components/ui/button"
+      "@/components/*": ["src/components/*"],
+
+      // 2. Alias for lib directory (for utils.js)
+      // Allows importing utils as: import { cn } from "@/lib/utils"
+      "@/lib/*": ["src/lib/*"],
+
+      // Add other top-level directories as needed (e.g., hooks, providers)
+      "@/hooks/*": ["src/hooks/*"],
+      "@/providers/*": ["src/providers/*"]
+    },
+
+    // Set to modern ES module standards
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    // Enable JSX support for React files
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
