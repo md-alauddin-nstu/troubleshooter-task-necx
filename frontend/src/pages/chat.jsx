@@ -7,6 +7,12 @@ import { useEffect } from "react";
 import { useUser } from "../hooks/user-hook";
 import { useToast } from "../hooks/toast-hook";
 import { useMessage } from "../hooks/message-hook";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/components/ui/card";
 
 export default function Chat() {
   const { setUsers, setSelectedUserId } = useUser();
@@ -35,10 +41,16 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className="page-chat">
-      <ChatHeader className="chat-header" />
-      <ChatBody />
-      <ChatFooter className="chat-footer" />
-    </div>
+    <Card>
+      <CardHeader>
+        <ChatHeader />
+      </CardHeader>
+      <CardContent>
+        <ChatBody />
+      </CardContent>
+      <CardFooter>
+        <ChatFooter />
+      </CardFooter>
+    </Card>
   );
 }

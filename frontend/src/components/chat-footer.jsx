@@ -3,6 +3,9 @@ import { useToast } from "../hooks/toast-hook.js";
 import { createMessage } from "../apis/message-apis.js";
 import { useUser } from "../hooks/user-hook.js";
 import { useMessage } from "../hooks/message-hook.js";
+import { Button } from "./components/ui/button.jsx";
+import { Input } from "./components/ui/input.jsx";
+import { Card, CardContent } from "./components/ui/card.jsx";
 
 export default function ChatFooter() {
   const [messageText, setMessageText] = useState("");
@@ -29,16 +32,20 @@ export default function ChatFooter() {
   };
 
   return (
-    <div className="">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-        />
-        <button type="submit" className="bg-green-500">Send</button>
-      </form>
-    </div>
+    <Card className={"w-full"}>
+      <CardContent >
+        <form onSubmit={handleSubmit} className={"w-full flex gap-2"}>
+          <Input
+            type="text"
+            placeholder="Type your message..."
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
+          />
+          <Button type="submit" className="bg-green-500">
+            Send
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

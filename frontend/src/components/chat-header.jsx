@@ -2,6 +2,13 @@ import { useState } from "react";
 import { createUser } from "../apis/user-apis.js";
 import { useUser } from "../hooks/user-hook.js";
 import { useToast } from "../hooks/toast-hook.js";
+import { Button } from "./components/ui/button.jsx";
+import { Input } from "./components/ui/input.jsx";
+import { Label } from "./components/ui/label.jsx";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "./components/ui/native-select.jsx";
 export default function ChatHeader() {
   const { users, setUsers, setSelectedUserId } = useUser();
   const { setToast } = useToast();
@@ -32,19 +39,35 @@ export default function ChatHeader() {
     }
   };
   return (
-    <div className="">
-      <h2>NECX Messaging</h2>
-      <div className="">
-        <form onSubmit={handleCreateUser}>
-          <label htmlFor="users">Sender</label>
-          <select name="users" id="users" onChange={handleUserChange}>
+    <div className="w-full gap-4 flex justify-between items-center">
+      <h2 className="text-2xl font-bold">NECX Messaging</h2>
+      <div className="grow">
+        <form
+          onSubmit={handleCreateUser}
+          className="w-full grow gap-1 flex justify-between"
+        >
+          {/* Sender selection */}
+          <Label htmlFor="users">Sender</Label>
+          <NativeSelect
+            className="grow w-min"
+            name="users"
+            id="users"
+            onChange={handleUserChange}
+          >
             {users.map((user) => (
-              <option key={user.id} value={user.id}>
+              <NativeSelectOption
+                className="text-black hover:bg-pink-500"
+                key={user.id}
+                value={user.id}
+              >
                 {user.name}
-              </option>
+              </NativeSelectOption>
             ))}
-          </select>
-          <input
+          </NativeSelect>
+
+          {/* Create user */}
+          <Input
+            className="w-min grow"
             type="text"
             name="username"
             id=""
@@ -52,7 +75,9 @@ export default function ChatHeader() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="submit">Create</button>
+          <Button type="submit" className={"bg-green-600"}>
+            Create
+          </Button>
         </form>
       </div>
     </div>
