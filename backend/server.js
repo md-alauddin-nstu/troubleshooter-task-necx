@@ -1,10 +1,14 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import userRoutes from "./user/user.route.js";
 import messageRoutes from "./message/message.route.js";
+import errorHandler from "./middleware/error.middleware.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -29,10 +33,10 @@ app.get("/api", (req, res) => {
     message: "Welcome to the NECX Messaging API",
     endpoints: {
       health: "GET /api/health",
-      messages: "Get /api/message",
-      createMessage: "Post /api/message",
       users: "Get /api/user",
       createUser: "Post /api/user",
+      messages: "Get /api/message",
+      createMessage: "Post /api/message",
     },
   });
 });
@@ -45,14 +49,7 @@ app.use("*", (req, res) => {
   });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    error: "Something went wrong!",
-    message: err.message,
-  });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
