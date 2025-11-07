@@ -4,7 +4,7 @@ import ChatBubble from "./chat-bubble";
 export default function ChatBody() {
   const { messages } = useMessage();
   return (
-    <div className="chat-body">
+    <div className="chat-body bg-red-500">
       {messages && messages.length > 0 ? (
         messages.map((message) => <ChatBubble key={message.id} {...message} />)
       ) : (

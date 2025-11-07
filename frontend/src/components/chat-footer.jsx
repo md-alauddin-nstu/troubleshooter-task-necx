@@ -37,7 +37,7 @@ export default function ChatFooter() {
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
         />
-        <button type="submit">Send</button>
+        <button type="submit" className="bg-green-500">Send</button>
       </form>
     </div>
   );
