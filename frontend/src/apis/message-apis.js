@@ -1,7 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function createMessage(message) {
-  const res = await fetch(`${API_BASE_URL}/message`, {
+  const res = await fetch(`${API_BASE_URL}/api/messages`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export async function createMessage(message) {
 }
 
 export async function getMessages() {
-  const res = await fetch(`${API_BASE_URL}/message`);
+  const res = await fetch(`${API_BASE_URL}/api/messages`);
   if (res.status >= 400) {
     const errorData = await res.json();
     throw new Error(errorData.message || "Failed to fetch messages");

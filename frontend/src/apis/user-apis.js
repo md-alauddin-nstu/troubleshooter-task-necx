@@ -1,7 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function createUser(user) {
-  const res = await fetch(`${API_BASE_URL}/user`, {
+  const res = await fetch(`${API_BASE_URL}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export async function createUser(user) {
 }
 
 export async function getUsers() {
-  const res = await fetch(`${API_BASE_URL}/user`);
+  const res = await fetch(`${API_BASE_URL}/api/users`);
   if (res.status >= 400) {
     const errorData = await res.json();
     throw new Error(errorData.message || "Failed to fetch users");
