@@ -51,8 +51,12 @@ app.use("*", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`📍 API base: http://localhost:${PORT}/api`);
-});
+export default app;
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`📍 API base: http://localhost:${PORT}/api`);
+  });
+}
