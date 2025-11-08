@@ -14,7 +14,7 @@ export default function Home() {
   const checkBackendHealth = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/health`);
+      const response = await fetch(`${API_BASE_URL}/api/health`);
       const data = await response.json();
       setHealthStatus(data);
     } catch (error) {
