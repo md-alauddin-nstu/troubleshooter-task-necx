@@ -1,9 +1,8 @@
+import { Toaster } from "sonner";
 import "./App.css";
-import Toast from "./components/toast.jsx";
 import Chat from "./pages/chat";
 import Home from "./pages/home";
 import { MessageProvider } from "./providers/message-provider.jsx";
-import { ToastProvider } from "./providers/toast-provider.jsx";
 import { UserProvider } from "./providers/user-provider.jsx";
 
 function App() {
@@ -16,14 +15,12 @@ function App() {
 
       <main className="app-main">
         {/* <Home /> */}
-        <ToastProvider>
-          <UserProvider>
-            <MessageProvider>
-              <Chat />
-            </MessageProvider>
-          </UserProvider>
-          <Toast />
-        </ToastProvider>
+        <UserProvider>
+          <MessageProvider>
+            <Chat />
+          </MessageProvider>
+        </UserProvider>
+        <Toaster position="top-right" toastOptions={{}} />
       </main>
     </div>
   );

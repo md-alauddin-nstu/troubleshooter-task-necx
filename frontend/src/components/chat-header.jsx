@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createUser } from "../apis/user-apis.js";
 import { useUser } from "../hooks/user-hook.js";
-import { useToast } from "../hooks/toast-hook.js";
 import { Button } from "./components/ui/button.jsx";
 import { Input } from "./components/ui/input.jsx";
 import { Label } from "./components/ui/label.jsx";
@@ -9,9 +8,9 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "./components/ui/native-select.jsx";
+import { toast } from "sonner";
 export default function ChatHeader() {
   const { users, setUsers, setSelectedUserId } = useUser();
-  const { setToast } = useToast();
   const [name, setName] = useState("");
 
   const handleUserChange = (e) => {
@@ -29,13 +28,10 @@ export default function ChatHeader() {
       console.log("User created:", res.data);
       setUsers((prevUsers) => [...prevUsers, res.data]);
       setName("");
-      setToast({ message: "User created successfully.", type: "success" });
+      toast.success("User created successfully.");
     } catch (e) {
       console.error("Failed to create user:", e);
-      setToast({
-        message: e.message || "Failed to create User",
-        type: "error",
-      });
+      toast.error(e.message || "Failed to create user.");
     }
   };
   return (

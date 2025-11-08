@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useToast } from "../hooks/toast-hook.js";
 import { createMessage } from "../apis/message-apis.js";
 import { useUser } from "../hooks/user-hook.js";
 import { useMessage } from "../hooks/message-hook.js";
 import { Button } from "./components/ui/button.jsx";
 import { Input } from "./components/ui/input.jsx";
 import { Card, CardContent } from "./components/ui/card.jsx";
+import { toast } from "sonner";
 
 export default function ChatFooter() {
   const [messageText, setMessageText] = useState("");
   const { addMessage } = useMessage();
   const { selectedUserId } = useUser();
-  const { setToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,17 +22,17 @@ export default function ChatFooter() {
       });
       setMessageText("");
       addMessage(res.data);
-      setToast({ type: "success", message: "Message sent!" });
+      toast.success("Message sent successfully");
       console.log("Message sent:", messageText);
     } catch (error) {
       console.error("Failed to send message:", error);
-      setToast({ type: "error", message: error.message });
+      toast.error(error.message || "Failed to send message");
     }
   };
 
   return (
     <Card className={"w-full"}>
-      <CardContent >
+      <CardContent>
         <form onSubmit={handleSubmit} className={"w-full flex gap-2"}>
           <Input
             type="text"

@@ -5,7 +5,6 @@ import ChatFooter from "../components/chat-footer";
 import ChatHeader from "../components/chat-header";
 import { useEffect } from "react";
 import { useUser } from "../hooks/user-hook";
-import { useToast } from "../hooks/toast-hook";
 import { useMessage } from "../hooks/message-hook";
 import {
   Card,
@@ -13,11 +12,11 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/components/ui/card";
+import { toast } from "sonner";
 
 export default function Chat() {
   const { setUsers, setSelectedUserId } = useUser();
   const { setMessages } = useMessage();
-  const { setToast } = useToast();
 
   useEffect(() => {
     (async () => {
@@ -35,7 +34,7 @@ export default function Chat() {
         setMessages(messageRes.data);
       } catch (e) {
         console.error("Failed to fetch initial data:", e);
-        setToast({ message: "Failed to load chat data.", type: "error" });
+        toast.error("Failed to fetch initial data");
       }
     })();
   }, []);
