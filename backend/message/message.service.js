@@ -1,7 +1,7 @@
 import storageService from "../store.js";
 
-export async function createMessage({ userId, content }) {
-  return await storageService.message.createMessage({ userId, content });
+export async function createMessage({ senderId, content }) {
+  return await storageService.message.createMessage({ senderId, content });
 }
 
 export async function getMessages() {
