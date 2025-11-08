@@ -42,6 +42,15 @@ pids
 coverage/
 *.lcov
 
+# Playwright specific
+**/test-results/
+**/playwright-report/
+**/blob-report/
+**/playwright/.cache/
+**/.auth/
+**/e2e-videos/
+**/e2e-screenshots/
+
 # Dependency directories
 jspm_packages/
 

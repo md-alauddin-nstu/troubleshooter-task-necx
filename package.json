@@ -9,7 +9,10 @@
     "dev:frontend": "npm --prefix frontend run dev",
     "dev": "concurrently -k -n backend,frontend -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
     "build": "npm --prefix frontend run build",
-    "start": "npm --prefix backend start"
+    "start": "npm --prefix backend start",
+    "test:e2e": "npm --prefix frontend run test:e2e",
+    "test:e2e:ui": "npm --prefix frontend run test:e2e:ui",
+    "test:e2e:debug": "npm --prefix frontend run test:e2e:debug"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
