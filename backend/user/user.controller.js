@@ -28,3 +28,13 @@ export const getUser = async (req, res, next) => {
     next(e);
   }
 };
+
+export const deleteAllUsers = async (req, res, next) => {
+  console.log(`✔ Request received at ${req.path}`);
+  try {
+    await userService.deleteAllUsers();
+    res.status(200).json({ message: "All users deleted successfully" });
+  } catch (e) {
+    next(e);
+  }
+};

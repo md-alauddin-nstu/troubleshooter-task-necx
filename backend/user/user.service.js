@@ -7,3 +7,7 @@ export async function createUser({ name }) {
 export async function getUsers() {
   return await storageService.user.getUsers();
 }
+
+export async function deleteAllUsers() {
+  return await storageService.user.deleteAllUsers();
+}

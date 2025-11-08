@@ -50,6 +50,10 @@ export async function getUsers() {
   return await readJson(usersFile);
 }
 
+export async function deleteAllUsers() {
+  await writeJson(usersFile, []);
+}
+
 export async function createMessage({ content, senderId }) {
   const messages = await readJson(messagesFile);
 
@@ -79,6 +83,7 @@ export default {
   user: {
     getUsers,
     createUser,
+    deleteAllUsers,
   },
   message: {
     getMessages,
