@@ -14,7 +14,7 @@ function App() {
       </header>
 
       <main className="app-main">
-        {/* <Home /> */}
+        <Home />
         <UserProvider>
           <MessageProvider>
             <Chat />

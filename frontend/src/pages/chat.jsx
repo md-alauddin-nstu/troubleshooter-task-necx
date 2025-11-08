@@ -40,11 +40,11 @@ export default function Chat() {
   }, []);
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="my-4 h-[80vh] gap-2 rounded-xl flex flex-col">
+      <CardHeader >
         <ChatHeader />
       </CardHeader>
-      <CardContent>
+      <CardContent className="w-full flex flex-col flex-1 h-full overflow-hidden">
         <ChatBody />
       </CardContent>
       <CardFooter>

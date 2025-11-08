@@ -13,12 +13,12 @@ export default function ChatBubble({ content, sender, createdAt }) {
     >
       <Card
         className={cn(
-          "w-max",
-          sender?.id === selectedUserId ? " bg-green-600" : ""
+          "w-max mx-2 p-2 gap-2",
+          sender?.id === selectedUserId ? " bg-green-800" : ""
         )}
       >
-        <CardContent>{content}</CardContent>
-        <CardFooter className={"text-xs text-muted-foreground"}>
+        <CardContent className="px-1 text-sm">{content}</CardContent>
+        <CardFooter className={"px-1 text-xs text-muted-foreground"}>
           {sender && sender.name} . {new Date(createdAt).toLocaleTimeString()}
         </CardFooter>
       </Card>

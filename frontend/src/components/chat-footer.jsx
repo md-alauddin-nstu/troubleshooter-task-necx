@@ -31,7 +31,7 @@ export default function ChatFooter() {
   };
 
   return (
-    <Card className={"w-full"}>
+    <Card className="w-full h-full">
       <CardContent>
         <form onSubmit={handleSubmit} className={"w-full flex gap-2"}>
           <Input
