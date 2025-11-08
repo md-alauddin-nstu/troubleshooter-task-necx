@@ -62,6 +62,7 @@ jspm_packages/
 *.db
 *.sqlite
 messages.json
+backend/data/users.json
 localDB.json
 
 # Temporary folders

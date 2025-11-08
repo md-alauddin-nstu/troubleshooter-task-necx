@@ -10,8 +10,7 @@ async function ensureDataFilesExist() {
   try {
     await access(usersFile);
   } catch {
-    const defaultUser = { id: 1, name: "Me" };
-    await writeFile(usersFile, JSON.stringify([defaultUser], null, 2));
+    await writeFile(usersFile, JSON.stringify([], null, 2));
   }
   try {
     await access(messagesFile);
